@@ -18,19 +18,19 @@
 ##### Installing via npm
 
 ```bash
-npm install --save kaktana-react-lightweight-charts
+npm install --save gatsby-react-lightweight-charts
 ```
 
 ##### Installing via yarn
 
 ```bash
-yarn add kaktana-react-lightweight-charts
+yarn add gatsby-react-lightweight-charts
 ```
 
 ## Usage
 
 ```js
-import Chart from 'kaktana-react-lightweight-charts'
+import Chart from 'gatsby-react-lightweight-charts'
 ```
 
 To create a basic candlestick chart, write as follows:
@@ -122,17 +122,17 @@ class App extends Component {
 
 ## License
 
-kaktana-react-lightweight-charts is released under MIT license. You are free to use, modify and distribute this software, as long as the copyright header is left intact.
+gatsby-react-lightweight-charts is released under MIT license. You are free to use, modify and distribute this software, as long as the copyright header is left intact.
 
 
 [lightweight-charts-version-img]: https://img.shields.io/badge/lightweight--charts-v2.0.0-brightgreen
 [lightweight-charts-link]: https://github.com/tradingview/lightweight-charts/tree/v2.0.0
 
-[npm-version-img]: https://badge.fury.io/js/kaktana-react-lightweight-charts.svg
-[npm-downloads-img]: https://img.shields.io/npm/dm/kaktana-react-lightweight-charts.svg
-[npm-link]: https://www.npmjs.com/package/kaktana-react-lightweight-charts
+[npm-version-img]: https://badge.fury.io/js/gatsby-react-lightweight-charts.svg
+[npm-downloads-img]: https://img.shields.io/npm/dm/gatsby-react-lightweight-charts.svg
+[npm-link]: https://www.npmjs.com/package/gatsby-react-lightweight-charts
 
-[bundle-size-img]: https://badgen.net/bundlephobia/minzip/kaktana-react-lightweight-charts
-[deps-count-img]: https://img.shields.io/badge/dynamic/json.svg?label=dependecies&color=brightgreen&query=$.dependencyCount&uri=https%3A%2F%2Fbundlephobia.com%2Fapi%2Fsize%3Fpackage%3Dkaktana-react-lightweight-charts
-[bundle-size-link]: https://bundlephobia.com/result?p=kaktana-react-lightweight-charts
+[bundle-size-img]: https://badgen.net/bundlephobia/minzip/gatsby-react-lightweight-charts
+[deps-count-img]: https://img.shields.io/badge/dynamic/json.svg?label=dependecies&color=brightgreen&query=$.dependencyCount&uri=https%3A%2F%2Fbundlephobia.com%2Fapi%2Fsize%3Fpackage%3Dgatsby-react-lightweight-charts
+[bundle-size-link]: https://bundlephobia.com/result?p=gatsby-react-lightweight-charts
 

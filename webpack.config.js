@@ -1,11 +1,12 @@
-var path = require("path");
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
     mode: "production",
-    entry: "./src/kaktana-react-lightweight-charts.js",
+    entry: "./src/gatsby-react-lightweight-charts.js",
     output: {
         path: path.resolve("dist"),
-        filename: "kaktana-react-lightweight-charts.min.js",
+        filename: "gatsby-react-lightweight-charts.min.js",
         libraryTarget: "commonjs2"
     },
     module: {
@@ -19,5 +20,15 @@ module.exports = {
     },
     externals: {
         react: "react"
-    }
+    },
+    plugins: [
+        new webpack.BannerPlugin({
+            banner: "const _win=(global.window||{locale:\"en\",userAgent:\"\"}),_nav={}",
+            raw: true
+        }),
+        new webpack.DefinePlugin({
+            "window": "_win",
+            "navigator": "_nav"
+        })
+    ]
 };

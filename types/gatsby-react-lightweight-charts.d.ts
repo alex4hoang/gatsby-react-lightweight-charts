@@ -1,4 +1,4 @@
-declare module "kaktana-react-lightweight-charts" {
+declare module "gatsby-react-lightweight-charts" {
     interface Props {
         candlestickSeries?: Array<any>,
         lineSeries?: Array<any>,
