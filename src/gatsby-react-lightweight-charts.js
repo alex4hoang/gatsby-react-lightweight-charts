@@ -112,7 +112,8 @@ class ChartWrapper extends React.Component {
             this.handleUpdateChart();
         } else if (
             prevProps.from !== this.props.from ||
-            prevProps.to !== this.props.to
+            prevProps.to !== this.props.to ||
+            this.props.keepTimeScale
         )
             this.handleTimeRange();
     }
@@ -259,7 +260,6 @@ class ChartWrapper extends React.Component {
 
         this.handleSeries();
         this.handleEvents();
-        this.handleTimeRange();
 
         if (props.autoWidth || props.autoHeight)
             // resize the chart with the window
