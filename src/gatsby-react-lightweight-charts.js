@@ -112,8 +112,7 @@ class ChartWrapper extends React.Component {
             this.handleUpdateChart();
         } else if (
             prevProps.from !== this.props.from ||
-            prevProps.to !== this.props.to ||
-            this.props.keepTimeScale
+            prevProps.to !== this.props.to
         )
             this.handleTimeRange();
     }
@@ -243,7 +242,7 @@ class ChartWrapper extends React.Component {
         window.removeEventListener("resize", this.resizeHandler);
         let { chart, chartDiv } = this;
         let props = this.props;
-        let options = this.props.darkTheme ? darkTheme : lightTheme;
+        let options = props.darkTheme ? darkTheme : lightTheme;
         options = mergeDeep(options, {
             width: props.autoWidth
                 ? chartDiv.current.parentNode.clientWidth
@@ -256,10 +255,13 @@ class ChartWrapper extends React.Component {
         chart.applyOptions(options);
         if (this.legendDiv.current) this.legendDiv.current.innerHTML = "";
         this.legends = [];
-        if (this.props.legend) this.handleMainLegend();
+        if (props.legend) this.handleMainLegend();
 
         this.handleSeries();
         this.handleEvents();
+
+        if (props.keepTimeScale)
+            this.handleTimeRange();
 
         if (props.autoWidth || props.autoHeight)
             // resize the chart with the window

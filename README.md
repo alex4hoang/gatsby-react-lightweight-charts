@@ -1,7 +1,8 @@
 <!-- markdownlint-disable no-inline-html first-line-h1 -->
 
 <div align="center">
-  <p>React.js wrapper for <a href="https://github.com/tradingview/lightweight-charts">Lightweight Charts</a> to build interactive financial charts in react.</p>
+  <p>Gatsby/React implementation of <a href="https://github.com/tradingview/lightweight-charts">Lightweight Charts</a> 
+    for displaying interactive financial charts.</p>
 
   [![lightweight-charts version][lightweight-charts-version-img]][lightweight-charts-link]
   [![npm version][npm-version-img]][npm-link]
@@ -35,7 +36,7 @@ import Chart from 'gatsby-react-lightweight-charts'
 
 To create a basic candlestick chart, write as follows:
 ```javascript
-const MyChart = (props) => {
+const MyChart = () => {
 
   const params = {
     options: {
@@ -72,7 +73,7 @@ const MyChart = (props) => {
   }
 
   return (
-    <Chart options={params.options}
+    <Chart options={params.options} 
       candlestickSeries={params.candlestickSeries}
       autoWidth height={320} />
   )
@@ -99,7 +100,7 @@ const MyChart = (props) => {
 |`onTimeRangeMove`|`TimeRangeChangeEventHandler`|Subscribe to time range change events. The callback function is defined in [the official Docs](https://github.com/tradingview/lightweight-charts/blob/master/docs/events.md#timerangechangeeventhandler)|
 |`from`|`Date`|Sets visible range from the specified date. Date object is defined in [the official Docs](https://github.com/tradingview/lightweight-charts/blob/master/docs/time.md)|
 |`to`|`Date`|Sets visible range to the specified date. Date object is defined in [the official Docs](https://github.com/tradingview/lightweight-charts/blob/master/docs/time.md)|
-|`keepTimeScale`|`boolean`|If true, time scale resets to from/to range after data update|
+|`keepTimeScale`|`boolean`|If true, time scale maintians from/to range after data update|
 |`darkTheme`|`boolean`|If true, a custom dark theme palette is applied to the chart|
 
 ### SeriesObject
