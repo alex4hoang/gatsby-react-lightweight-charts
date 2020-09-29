@@ -123,8 +123,8 @@ const MyChart = (props) => {
 gatsby-react-lightweight-charts is released under MIT license. You are free to use, modify and distribute this software, as long as the copyright header is left intact.
 
 
-[lightweight-charts-version-img]: https://img.shields.io/badge/lightweight--charts-v2.0.0-brightgreen
-[lightweight-charts-link]: https://github.com/tradingview/lightweight-charts/tree/v2.0.0
+[lightweight-charts-version-img]: https://img.shields.io/badge/lightweight--charts-v3.1.5-brightgreen
+[lightweight-charts-link]: https://github.com/tradingview/lightweight-charts/tree/v3.1.5
 
 [npm-version-img]: https://badge.fury.io/js/gatsby-react-lightweight-charts.svg
 [npm-downloads-img]: https://img.shields.io/npm/dm/gatsby-react-lightweight-charts.svg
