@@ -1,6 +1,6 @@
 {
   "name": "gatsby-react-lightweight-charts",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple react wrapper for the tradingview lightweight charts module",
   "main": "dist/gatsby-react-lightweight-charts.min.js",
   "types": "types/gatsby-react-lightweight-charts.d.ts",
