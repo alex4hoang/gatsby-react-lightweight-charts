@@ -11,7 +11,6 @@ declare module "gatsby-react-lightweight-charts" {
         autoWidth?: boolean,
         from?: number,
         to?: number,
-        keepTimeScale?: boolean,
         onClick?: void,
         onCrosshairMove?: void,
         onTimeRangeMove?: void,

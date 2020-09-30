@@ -10,15 +10,28 @@ const addSeriesFunctions = {
     histogram: "addHistogramSeries",
 };
 
-const colors = [
-    "#008FFB",
-    "#00E396",
-    "#FEB019",
-    "#FF4560",
-    "#775DD0",
-    "#F86624",
-    "#A5978B",
-];
+const seriesTypes = [
+    {
+        property: "candlestickSeries",
+        type: "candlestick",
+    },
+    {
+        property: "lineSeries",
+        type: "line"
+    },
+    {
+        property: "areaSeries",
+        type: "area"
+    },
+    {
+        property: "barSeries",
+        type: "bar"
+    },
+    {
+        property: "histogramSeries",
+        type: "histogram"
+    },
+] ;
 
 const darkTheme = {
     layout: {
@@ -60,6 +73,7 @@ class ChartWrapper extends React.Component {
         this.chart = null;
         this.series = [];
         this.legends = [];
+        this.initTimeScale = true ;
     }
 
     componentDidMount() {
@@ -71,6 +85,7 @@ class ChartWrapper extends React.Component {
     componentDidUpdate(prevProps) {
         if (!this.props.autoWidth && !this.props.autoHeight)
             window.removeEventListener("resize", this.resizeHandler);
+
         if (
             !equal(
                 [
@@ -86,6 +101,7 @@ class ChartWrapper extends React.Component {
             )
         )
             this.unsubscribeEvents(prevProps);
+
         if (
             !equal(
                 [
@@ -107,14 +123,17 @@ class ChartWrapper extends React.Component {
                     this.props.histogramSeries,
                 ]
             )
-        ) {
-            this.removeSeries();
+        ) 
             this.handleUpdateChart();
-        } else if (
+
+        if (
             prevProps.from !== this.props.from ||
-            prevProps.to !== this.props.to
-        )
+            prevProps.to !== this.props.to ||
+            this.initTimeScale
+        ) {
             this.handleTimeRange();
+            this.initTimeScale = false ;
+        }
     }
 
     resizeHandler = () => {
@@ -129,59 +148,60 @@ class ChartWrapper extends React.Component {
         this.chart.resize(width, height);
     };
 
-    removeSeries = () => {
-        this.series.forEach((serie) => this.chart.removeSeries(serie));
-        this.series = [];
-    };
-
     addSeries = (serie, type) => {
-        const func = addSeriesFunctions[type];
-        let color =
-            (serie.option && serie.options.color) ||
-            colors[this.series.length % colors.length];
-        const series = this.chart[func]({
-            color,
-            ...serie.options,
-        });
-        let data = this.handleLinearInterpolation(
-            serie.data,
-            serie.linearInterpolation
-        );
-        series.setData(data);
+        const addFunc = addSeriesFunctions[type];
+        const series = this.chart[addFunc](serie.options);
+        series.setData(serie.data);
         if (serie.markers) series.setMarkers(serie.markers);
         if (serie.priceLines)
             serie.priceLines.forEach((line) => series.createPriceLine(line));
-        if (serie.legend) this.addLegend(series, color, serie.legend);
+        if (serie.legend) this.addLegend(series, serie.options.color, serie.legend);
         return series;
     };
 
     handleSeries = () => {
-        let series = this.series;
+        let prevSeries = this.series;
         let props = this.props;
-        props.candlestickSeries &&
-            props.candlestickSeries.forEach((serie) => {
-                series.push(this.addSeries(serie, "candlestick"));
-            });
 
-        props.lineSeries &&
-            props.lineSeries.forEach((serie) => {
-                series.push(this.addSeries(serie, "line"));
-            });
+        let newSeries = [] ;
 
-        props.areaSeries &&
-            props.areaSeries.forEach((serie) => {
-                series.push(this.addSeries(serie, "area"));
-            });
+        seriesTypes.forEach((seriesType)=>{
 
-        props.barSeries &&
-            props.barSeries.forEach((serie) => {
-                series.push(this.addSeries(serie, "bar"));
-            });
+            props[ seriesType.property ] &&
+                props[ seriesType.property ].forEach((typeSeries) => {
 
-        props.histogramSeries &&
-            props.histogramSeries.forEach((serie) => {
-                series.push(this.addSeries(serie, "histogram"));
-            });
+                    let iPrevRecord = -1 ;
+                    if( typeSeries.id )
+                        iPrevRecord = prevSeries.findIndex( r => 
+                            ( r.id && ( r.id === typeSeries.id ) ) ) ;
+
+                    if( iPrevRecord >= 0 ) {
+                        const prevRecord = prevSeries[ iPrevRecord ] ;
+
+                        prevRecord.seriesApi.applyOptions( typeSeries.options ) ;
+                        prevRecord.seriesApi.setData( typeSeries.data ) ;
+                        
+                        newSeries.push( prevRecord ) ;
+                        prevSeries.splice( iPrevRecord, 1 ) ;
+                    }
+                    else
+                        newSeries.push({
+                            id: typeSeries.id,
+                            seriesApi: this.addSeries(typeSeries, seriesType.type)
+                        });
+                });
+        }) ;
+
+        prevSeries.forEach( series => {
+            this.chart.removeSeries( series.seriesApi ) ;
+            if( series.legend ) {
+                let iLegend = this.legends.findIndex(legend => (series.legend === legend.title)) ;
+                if( iLegend >= 0 )
+                    this.legends.splice( iLegend, 1 ) ;
+            }
+        }) ;
+
+        this.series = newSeries ;
     };
 
     unsubscribeEvents = (prevProps) => {
@@ -209,35 +229,6 @@ class ChartWrapper extends React.Component {
         from && to && this.chart.timeScale().setVisibleRange({ from, to });
     };
 
-    handleLinearInterpolation = (data, candleTime) => {
-        if (!candleTime || data.length < 2 || !data[0].value) return data;
-        let first = data[0].time;
-        let last = data[data.length - 1].time;
-        let newData = new Array(Math.floor((last - first) / candleTime));
-        newData[0] = data[0];
-        let index = 1;
-        for (let i = 1; i < data.length; i++) {
-            newData[index++] = data[i];
-            let prevTime = data[i - 1].time;
-            let prevValue = data[i - 1].value;
-            let { time, value } = data[i];
-            for (
-                let interTime = prevTime;
-                interTime < time - candleTime;
-                interTime += candleTime
-            ) {
-                // interValue get from the Taylor-Young formula
-                let interValue =
-                    prevValue +
-                    (interTime - prevTime) *
-                        ((value - prevValue) / (time - prevTime));
-                newData[index++] = { time: interTime, value: interValue };
-            }
-        }
-        // return only the valid values
-        return newData.filter((x) => x);
-    };
-
     handleUpdateChart = () => {
         window.removeEventListener("resize", this.resizeHandler);
         let { chart, chartDiv } = this;
@@ -254,14 +245,10 @@ class ChartWrapper extends React.Component {
         });
         chart.applyOptions(options);
         if (this.legendDiv.current) this.legendDiv.current.innerHTML = "";
-        this.legends = [];
         if (props.legend) this.handleMainLegend();
 
         this.handleSeries();
         this.handleEvents();
-
-        if (props.keepTimeScale)
-            this.handleTimeRange();
 
         if (props.autoWidth || props.autoHeight)
             // resize the chart with the window
@@ -289,7 +276,7 @@ class ChartWrapper extends React.Component {
                     let row = document.createElement("div");
                     row.innerText = title + " ";
                     let priceElem = document.createElement("span");
-                    priceElem.style.color = color;
+                    priceElem.style.color = color || "rgba(0, 150, 136, 0.8)";
                     priceElem.innerText = " " + price;
                     row.appendChild(priceElem);
                     div.appendChild(row);

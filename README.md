@@ -100,7 +100,6 @@ const MyChart = () => {
 |`onTimeRangeMove`|`TimeRangeChangeEventHandler`|Subscribe to time range change events. The callback function is defined in [the official Docs](https://github.com/tradingview/lightweight-charts/blob/master/docs/events.md#timerangechangeeventhandler)|
 |`from`|`Date`|Sets visible range from the specified date. Date object is defined in [the official Docs](https://github.com/tradingview/lightweight-charts/blob/master/docs/time.md)|
 |`to`|`Date`|Sets visible range to the specified date. Date object is defined in [the official Docs](https://github.com/tradingview/lightweight-charts/blob/master/docs/time.md)|
-|`keepTimeScale`|`boolean`|If true, time scale maintians from/to range after data update|
 |`darkTheme`|`boolean`|If true, a custom dark theme palette is applied to the chart|
 
 ### SeriesObject
