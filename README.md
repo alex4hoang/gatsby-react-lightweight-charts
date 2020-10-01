@@ -122,6 +122,7 @@ const MyChart = () => {
 
 gatsby-react-lightweight-charts is released under MIT license. You are free to use, modify and distribute this software, as long as the copyright header is left intact.
 
+This software incorporates several parts of TradingView Lightweight Charts (Copyright &copy; 2020 TradingView, Inc. https://www.tradingview.com/) that are covered by the Apache License, Version 2.0.
 
 [lightweight-charts-version-img]: https://img.shields.io/badge/lightweight--charts-v3.1.5-brightgreen
 [lightweight-charts-link]: https://github.com/tradingview/lightweight-charts/tree/v3.1.5
