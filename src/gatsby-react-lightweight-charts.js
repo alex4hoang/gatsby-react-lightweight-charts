@@ -73,7 +73,6 @@ class ChartWrapper extends React.Component {
         this.chart = null;
         this.series = [];
         this.legends = [];
-        this.initTimeScale = true ;
     }
 
     componentDidMount() {
@@ -125,15 +124,11 @@ class ChartWrapper extends React.Component {
             )
         ) 
             this.handleUpdateChart();
-
-        if (
+        else if (
             prevProps.from !== this.props.from ||
-            prevProps.to !== this.props.to ||
-            this.initTimeScale
-        ) {
+            prevProps.to !== this.props.to
+        )
             this.handleTimeRange();
-            this.initTimeScale = false ;
-        }
     }
 
     resizeHandler = () => {
@@ -249,6 +244,7 @@ class ChartWrapper extends React.Component {
 
         this.handleSeries();
         this.handleEvents();
+        this.handleTimeRange();
 
         if (props.autoWidth || props.autoHeight)
             // resize the chart with the window
