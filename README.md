@@ -124,7 +124,7 @@ gatsby-react-lightweight-charts is released under MIT license. You are free to u
 
 This software incorporates several parts of TradingView Lightweight Charts (Copyright &copy; 2020 TradingView, Inc. https://www.tradingview.com/) that are covered by the Apache License, Version 2.0.
 
-[lightweight-charts-version-img]: https://img.shields.io/badge/lightweight--charts-v3.1.5-brightgreen
+[lightweight-charts-version-img]: https://img.shields.io/badge/lightweight--charts-3.1.5-brightgreen
 [lightweight-charts-link]: https://github.com/tradingview/lightweight-charts/tree/v3.1.5
 
 [npm-version-img]: https://badge.fury.io/js/gatsby-react-lightweight-charts.svg
