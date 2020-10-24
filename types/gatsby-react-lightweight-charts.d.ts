@@ -9,11 +9,13 @@ declare module "gatsby-react-lightweight-charts" {
         height?: number,
         options?: object,
         autoWidth?: boolean,
+        autoHeight?: boolean,
         from?: number,
         to?: number,
         onClick?: void,
         onCrosshairMove?: void,
         onTimeRangeMove?: void,
+        legend?: string,
         darkTheme?: boolean,
     }
 
